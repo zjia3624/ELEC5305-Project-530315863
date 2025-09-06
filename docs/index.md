@@ -22,5 +22,5 @@ model Params and CPU latency.
 Planned figures. confusion matrix, accuracy-vs-model-size, learning curves.
 
 Links：
-Repo: https://github.com/zjia3624/ELEC5305-Project-zixianjia
-Pages: https://zjia3624.github.io/ELEC5305-Project-zixianjia/
+Repo: https://github.com/zjia3624/ELEC5305-Project-530315863
+Pages: https://zjia3624.github.io/ELEC5305-Project-530315863/
