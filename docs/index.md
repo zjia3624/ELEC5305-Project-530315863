@@ -5,8 +5,8 @@ On clean Speech Commands, can a compact CNN trained on Bark spectrograms reach n
 We will also test a tiny variant (channels × 0.5) or replace Bark with Mel to study the accuracy–size trade-off.
 
 Methodology：
-MATLAB Online: Google Speech Commands (10 classes). 
-Bark spectrogram baseline (fs 16 kHz, 25 ms/10 ms), optional Mel. 
+MATLAB Online: Google Speech Commands. 
+Bark spectrogram baseline, optional Mel. 
 CNN per MathWorks example + tiny CNN. Speaker-stratified split.
 minimal augmentation.
 
