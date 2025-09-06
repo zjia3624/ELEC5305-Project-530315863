@@ -1,5 +1,9 @@
 Speech Command Recognition in MATLAB (Bark-Spectrogram CNN)
 
+Name: zixian jia
+Sid: 530315863
+
+
 Research Question： 
 On clean Speech Commands, can a compact CNN trained on Bark spectrograms reach near-baseline accuracy while staying lightweight? 
 We will also test a tiny variant (channels × 0.5) or replace Bark with Mel to study the accuracy–size trade-off.
