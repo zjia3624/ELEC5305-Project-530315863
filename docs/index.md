@@ -5,8 +5,8 @@ Sid: 530315863
 
 
 Research Question： 
-On clean Speech Commands, can a compact CNN trained on Bark spectrograms reach near-baseline accuracy while staying lightweight? 
-We will also test a tiny variant (channels × 0.5) or replace Bark with Mel to study the accuracy–size trade-off.
+On clean Speech Commands, can a compact CNN trained on Bark spectrograms reach near-baseline accuracy while staying lightweight.
+We will also test a tiny variant or replace Bark with Mel to study the accuracy–size trade-off.
 
 
 Methodology：
@@ -17,7 +17,7 @@ minimal augmentation.
 
 
 Evaluation： Accuracy, Macro-F1, Confusion Matrix. 
-model Params and CPU latency (ms per 1-s clip).  
+model Params and CPU latency.  
 Planned figures. confusion matrix, accuracy-vs-model-size, learning curves.
 
 Links：
