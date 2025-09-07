@@ -54,8 +54,13 @@ W10-W11: Conduct noise assessments and refine models.
 W12-W13: Generate graphics styles and documentation, and improve the README and demo. Verify the process of reproducing the problem from scratch and submit a final report with a link.
 
 ## Reference
+
 Wang, X., Sun, S., & Xie, L. (2019, December). Virtual adversarial training for DS-CNN based small-footprint keyword spotting. In 2019 IEEE Automatic Speech Recognition and Understanding Workshop (ASRU) (pp. 607-612). IEEE.
+
+
 Rusci, M., Van Hamme, H., & Tuytelaars, T. (2025, April). Self-Incremental Training for Personalized Voice Command Recognition in a Wireless Audio Sensor Network. In ICASSP 2025-2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) (pp. 1-5). IEEE.
+
+
 Li, S., Yao, Y., Hu, J., Liu, G., Yao, X., & Hu, J. (2018). An ensemble stacked convolutional neural network model for environmental event sound recognition. Applied Sciences, 8(7), 1152.
 
 
