@@ -15,10 +15,12 @@ Repo: https://github.com/zjia3624/ELEC5305-Project-530315863
 
 This project targets end-devices such as headphones, watches, and smart homes. It aims to build a small-vocabulary speech recognition (KWS) system that can run in real time on a CPU. 
 
-The main obstacles to current deployment are: 1. Large model size and computational complexity, resulting in high latency and energy consumption. 
-2. Insufficient recognition robustness under environmental noise and gain variations.
+The main obstacles to current deployment are: 
+Large model size and computational complexity, resulting in high latency and energy consumption. 
+Insufficient recognition robustness under environmental noise and gain variations.
 
 Therefore, we proposed using PCEN-Mel as the front-end feature and designed two lightweight network routes. Depthwise separable convolution DS-CNN and one-dimensional temporal convolution TCN adjusting the number of channels using the width coefficient. we systematically evaluated the trade-off between accuracy, parameter count, and CPU latency.
+
 
 2. Background
 
@@ -28,15 +30,19 @@ PCEN, on the other hand, utilizes channel-level adaptive gain suppression and dy
 Depthwise separable convolution can achieve comparable accuracy with very few parameters, and TCN models long-term dependencies with low latency through dilated convolution. The reason for choosing this project is that it has both research value and engineering significance and is predicted to be completed within a limited time.
 
 
+
 3. Methodology
 
 This project uses MATLAB and the 10 command types of Google Speech Commands v2 as the target. It divides the data into three categories: train/val/test according to the speaker.
 
 The front-end uses PCEN-Mel features. SpecAugment and noise mixing are added during training to improve robustness. The model also uses two lightweight paths: DS-CNN and 1D-TCN. The number of channels is uniformly scaled using a width factor α. The Adam optimizer uses early stopping and a fixed random seed to ensure reproducibility. Accuracy, Macro-F1, and confusion matrix are used as accuracy metrics. Scatter plots are plotted and saved.
 
+
+
 4. Expected Outcomes
 
 The project aims to produce a small-vocabulary KWS prototype that can run in real time on a CPU. Three core visualizations will be developed: confusion matrix, training/validation learning curves, and Accuracy vs. Model Size. The performance goal is to achieve an accuracy of ≥75% on a clean test set, and provide a brief error analysis for easily confused categories.
+
 
 5. Timeline
 
