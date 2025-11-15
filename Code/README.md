@@ -1,49 +1,125 @@
 # Code folder
 ## Code Structure and File Descriptions
 
-All MATLAB scripts used in this project are located in the repository root.  
-This section explains the purpose of each file so that reviewers can easily understand the workflow and reproduce the experiments.
+All MATLAB scripts in this project are placed in the repository root directory.  
+This section briefly explains the purpose of each file to help reviewers and instructors understand and reproduce the experiments.
 
 ---
 
-### Main Scripts
+### Main Scripts / Experiment Pipeline
 
 - **`Project_Zixian_Jia.m`**  
-  The main script (standard `.m` format) that runs the entire experimental pipeline:
-  1. Load spoken digit audio data from the `recordings/` folder  
-  2. Split into training / validation / test sets  
-  3. Extract MFCC(+Δ+ΔΔ) features and train the SVM baseline  
-  4. Extract log-Mel spectrograms and train the CNN  
-  5. Evaluate SVM and CNN performance on clean and noisy test sets  
-  6. Measure CNN inference latency  
-  7. Save all results to `spoken_digit_advanced_results.mat`
+  - The main script of the entire experiment (pure `.m` version).  
+  - It performs the following steps:
+    1. Load spoken digit audio data from the `recordings/` folder  
+    2. Split data into training / validation / test sets (70% / 15% / 15%)  
+    3. Extract MFCC(+Δ+ΔΔ) features and train the SVM baseline model  
+    4. Extract log-Mel spectrograms for CNN input and train a small CNN  
+    5. Evaluate SVM and CNN accuracy on both clean and noisy test sets (multiple SNR levels)  
+    6. Measure CNN inference latency and plot the results  
+    7. Save all important results into `spoken_digit_advanced_results.mat`  
 
 - **`project.mlx`**  
-  A MATLAB Live Script version of the experiment (same logic as above).  
-  It contains formatted text, inline output, and plots—recommended for interactive viewing.
+  - A MATLAB Live Script version of the experiment with the same logic as `Project_Zixian_Jia.m`.  
+  - Includes formatted sections, inline output, and visualizations.  
+  - Recommended for interactive viewing of training logs, confusion matrices, and curves.
 
 ---
 
-### Feature Extraction & Model Functions
+### Functional Files (Feature Extraction & Model Components)
 
 - **`addNoiseToSignal.m`**  
-  Function: `y = addNoiseToSignal(x, targetSNRdB)`  
-  Adds Gaussian white noise to a clean signal based on a specified SNR level.  
-  Used during noise robustness testing.
+  - Function: `y = addNoiseToSignal(x, targetSNRdB)`  
+  - Purpose: Computes the required noise power for a given `targetSNRdB` and adds Gaussian white noise to signal `x`.  
+  - Usage: Used for generating noisy test sets in noise robustness experiments at 0/5/10/15/20 dB SNR.
 
 - **`buildCnnLayers.m`**  
-  Function: `layers = buildCnnLayers(inputSize, numClasses)`  
-  Constructs a 2D CNN architecture for log-Mel spectrogram input.  
-  Includes conv–BN–ReLU–pool blocks, dropout, fully connected layers, and softmax output.
+  - Function: `layers = buildCnnLayers(inputSize, numClasses)`  
+  - Builds a 2D CNN architecture for log-Mel spectrogram input.  
+  - Main structure:
+    - Input layer with z-score normalization  
+    - Three convolutional blocks (`conv2d + batchNorm + ReLU + maxPooling`)  
+    - Dropout layer  
+    - Fully connected layer + Softmax + Classification layer  
+  - Usage: Called by the main script during CNN training.
 
 - **`evaluateClassifier.m`**  
-  Function: `[yPred, acc, confMat] = evaluateClassifier(model, X, yTrue)`  
-  Makes predictions, computes accuracy, and returns a confusion matrix.  
-  Works for both SVM and CNN classifiers.
+  - Function: `[yPred, acc, confMat] = evaluateClassifier(model, X, yTrue)`  
+  - Performs prediction on feature matrix `X`, returns classification accuracy `acc`, and the confusion matrix `confMat`.  
+  - Usage: Used to evaluate both SVM and CNN models under different datasets or noise settings.
 
 - **`extractFrameFeatures.m`**  
-  Function:  
-  ```matlab
-  [X, y] = extractFrameFeatures(ads, fsTarget, featType, ...
-                                numCoeffs, useDelta, snrTarget, ...
-                                frameLen, hopLen, maxTimeSec)
+  - Function:
+    ```matlab
+    [X, y] = extractFrameFeatures(ads, fsTarget, featType, ...
+                                  numCoeffs, useDelta, snrTarget, ...
+                                  frameLen, hopLen, maxTimeSec)
+    ```
+  - Purpose: Reads audio files from `audioDatastore` and performs:
+    - Resampling to `fsTarget`  
+    - Time normalization using `fixLength`  
+    - Optional noise addition (`snrTarget`)  
+    - Frame-level MFCC extraction  
+    - Mean pooling over time to form a fixed-length feature vector  
+  - Usage: Feature extraction for the **MFCC + SVM baseline**.
+
+- **`extractSpectrogramSet.m`**  
+  - Function:
+    ```matlab
+    [X4d, y] = extractSpectrogramSet(ads, fsTarget, ...
+                                     numMelBands, frameLen, hopLen, ...
+                                     maxTimeSec, snrTarget)
+    ```
+  - Purpose: Extracts 4D log-Mel spectrogram “images” for CNN training:
+    - Resampling + fixed length  
+    - Optional noise injection  
+    - Mel spectrogram → log10  
+    - Output shape:  
+      `numBands × numFrames × 1 × numFiles`  
+  - Usage: Provides CNN input tensors, similar to image batches.
+
+- **`fixLength.m`**  
+  - Function: `xOut = fixLength(x, fs, maxTimeSec)`  
+  - Purpose: Standardizes duration of all signals:
+    - Trim if longer than target  
+    - Zero-pad if shorter  
+    - Leave unchanged if equal  
+  - Usage: Ensures consistent duration for feature extraction and CNN batch training.
+
+- **`trainSVMWithValidation.m`**  
+  - Function:  
+    ```matlab
+    [bestModel, bestCfg] = trainSVMWithValidation(XTrain, yTrain, params)
+    ```
+  - Performs a grid search over SVM hyperparameters:
+    - Loops through `kernelScaleList` and `boxConstraintList`  
+    - Uses 5-fold cross-validation (`fitcecoc + kfoldLoss`)  
+    - Prints validation accuracy for each configuration  
+    - Selects the best performing model  
+  - Usage: Provides an optimized **MFCC + SVM baseline model**.
+
+---
+
+### Results File
+
+- **`spoken_digit_advanced_results.mat`**  
+  - Contains a saved `results` structure including:
+    - `fsTarget` — target sampling rate  
+    - SVM accuracies on training / validation / test sets  
+    - CNN test-set accuracy (clean condition)  
+    - `snrLevels` — SNR list used for robustness experiments  
+    - `accNoisy_svm`, `accNoisy_cnn` — SVM / CNN accuracy under different SNR levels  
+  - Usage: Convenient for generating plots and tables without retraining models.
+
+---
+
+### How to Run the Code
+
+1. Place the Free Spoken Digit Dataset `.wav` files inside the `recordings/` folder.  
+2. Open MATLAB and set the current directory to the repository root.  
+3. **Option 1 (recommended):** Run `project.mlx` to execute the experiment step-by-step with visualization.  
+4. **Option 2:** Run `Project_Zixian_Jia.m` to execute the entire pipeline in script mode.  
+
+Both options will display all outputs, confusion matrices, and performance plots.
+
+---
