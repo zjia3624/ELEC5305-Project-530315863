@@ -115,11 +115,28 @@ This section briefly explains the purpose of each file to help reviewers and ins
 
 ### How to Run the Code
 
-1. Place the Free Spoken Digit Dataset `.wav` files inside the `recordings/` folder.  
-2. Open MATLAB and set the current directory to the repository root.  
-3. **Option 1 (recommended):** Run `project.mlx` to execute the experiment step-by-step with visualization.  
-4. **Option 2:** Run `Project_Zixian_Jia.m` to execute the entire pipeline in script mode.  
+1. **Check the dataset folder**
 
-Both options will display all outputs, confusion matrices, and performance plots.
+   Make sure the folder **`recordings/`** is present in the repository root and contains the spoken digit `.wav` files  
+   (this repository already includes them, so normally no extra action is needed).
 
----
+2. **Open the project in MATLAB**
+
+   - Set the **Current Folder** in MATLAB to the repository root directory.
+   - All `.m` files and the `recordings/` folder should be visible in the MATLAB file browser.
+
+3. **Option 1 – Run the Live Script (recommended)**  
+
+   - Open `project.mlx` in MATLAB.  
+   - Execute the sections one by one (or “Run all”) to:
+     - load the dataset,  
+     - train the SVM baseline and the CNN,  
+     - evaluate accuracy under clean and noisy conditions,  
+     - display confusion matrices and plots,  
+     - save the results to `spoken_digit_advanced_results.mat`.
+
+4. **Option 2 – Run the plain script**
+
+   - Run `Project_Zixian_Jia.m`.  
+   - All steps (data loading, feature extraction, model training, evaluation and saving results) will execute in batch.  
+   - Numerical results will be printed in the Command Window, and the figures (confusion matrices, SNR vs. accuracy, latency curve, etc.) will appear in separate figure windows.
