@@ -98,8 +98,7 @@ We focus on **recognition accuracy**, **noise robustness** under different SNR l
 - This meets real-time requirements for small speech recognition systems.
 
 ## Example Inputs
-![Dataset][(images/Fig3.1 dataset source from github.png)](https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/logmel_0_jackson_20.png)
-
+https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/logmel_0_jackson_20.png
 
 https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/mfcc_0_jackson_20.png
 
