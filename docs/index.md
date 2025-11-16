@@ -1,69 +1,119 @@
 
-## Voice command recognition using deep learning
+---
+title: ELEC5305 Project - Zixian Jia
+---
 
+# ELEC5305 Project – Noise-Robust Digit Speech Recognition
 
-Name: Zixian Jia
-SID: 530315863
-GitHub Username: zjia3624
+**Author:** Zixian Jia (SID: 530315863)  
+**Unit:** ELEC5305 – Acoustics, Speech and Signal Processing  
+**Date:** 16 / 11 / 2025  
 
-Link: 
+---
 
-Proposal pages: https://zjia3624.github.io/ELEC5305-Project-530315863/
+## 1. Project Overview
 
-Repo: https://github.com/zjia3624/ELEC5305-Project-530315863
+This project studies **small-sample digit speech recognition** on the Free Spoken Digit Dataset (FSDD).  
+Two systems are compared:
 
+- **MFCC + SVM** (traditional feature + shallow model)  
+- **Log-Mel spectrogram + CNN** (time–frequency feature + deep model)
 
+We focus on **recognition accuracy**, **noise robustness** under different SNR levels (0–20 dB), and **inference latency**, aiming at **lightweight speech recognition for embedded devices**.
 
+---
 
+## 2. Files and Code
 
+- 🔗 **GitHub Repository (Code & Figures)**  
+  <https://github.com/你的用户名/ELEC5305-Project-530315863>
 
+- 📄 **Project Report (PDF)**  
+  [Download the full report](../ELEC5305_Project_Zixian_Jia.pdf)
 
+- 🎥 **Demo Video**  
+  [Watch the project demo](在这里放你的 YouTube / Drive / OneDrive 链接)
 
-## Overview
+---
 
-This project targets end-devices such as headphones, watches, and smart homes. It aims to build a small-vocabulary speech recognition (KWS) system that can run in real time on a CPU.
+## 3. Methodology (Short Summary)
 
-The main obstacles to current deployment are: Large model size and computational complexity, resulting in high latency and energy consumption. Insufficient recognition robustness under environmental noise and gain variations.
+### 3.1 Dataset
 
-Therefore, we proposed using PCEN-Mel as the front-end feature and designed two lightweight network routes. Depthwise separable convolution DS-CNN and one-dimensional temporal convolution TCN adjusting the number of channels using the width coefficient. we systematically evaluated the trade-off between accuracy, parameter count, and CPU latency.
+- Dataset: **Free Spoken Digit Dataset (FSDD)**  
+- Digits 0–9, multiple speakers, 8 kHz sampling rate  
+- Train / Test split: **80% / 20%**  
+- For noise experiments, **white noise (AWGN)** is added only to the **test set** at SNR = 0, 5, 10, 15, 20 dB.
 
-## Background
+### 3.2 Feature Extraction
 
-In recent years, deep learning has achieved high accuracy in KWS, but many methods rely on deep 2D CNNs or attention structures, which are not suitable for mobile deployment. Furthermore, traditional MFCC/Log Mel performance degrades significantly under conditions of gain drift or distant speech. PCEN, on the other hand, utilizes channel-level adaptive gain suppression and dynamic compression, making it more robust in low SNR and distant speech scenarios.
+- **MFCC + Δ + ΔΔ (39-D)**  
+  - 25 ms frame length, 10 ms frame shift  
+  - 26 Mel filters, 13 static MFCC + first and second derivatives  
+  - Flattened into fixed-length vectors → SVM classifier.
 
-Depthwise separable convolution can achieve comparable accuracy with very few parameters, and TCN models long-term dependencies with low latency through dilated convolution. The reason for choosing this project is that it has both research value and engineering significance and is predicted to be completed within a limited time.
+- **Log-Mel Spectrogram (40 × ~80)**  
+  - STFT → Mel filter bank (40 filters) → log operation  
+  - 2D time–frequency representation → input to CNN.
 
-## Methodology
+### 3.3 Models
 
-This project uses MATLAB and the 10 command types of Google Speech Commands v2 as the target. It divides the data into three categories: train/val/test according to the speaker.
+- **SVM (MFCC input)**  
+  - RBF kernel, small grid search over C and kernelScale  
+  - Works on low-dimensional static features, prone to overfitting.
 
-The front-end uses PCEN-Mel features. SpecAugment and noise mixing are added during training to improve robustness. The model also uses two lightweight paths: DS-CNN and 1D-TCN. The number of channels is uniformly scaled using a width factor α. The Adam optimizer uses early stopping and a fixed random seed to ensure reproducibility. Accuracy, Macro-F1, and confusion matrix are used as accuracy metrics. Scatter plots are plotted and saved.
+- **CNN (Log-Mel input)**  
+  - 2 convolution + pooling layers  
+  - 1 fully connected layer + softmax  
+  - Trained for 20–30 epochs with Adam and cross-entropy loss.
 
-## Expected Outcomes
+---
 
-The project aims to produce a small-vocabulary KWS prototype that can run in real time on a CPU. Three core visualizations will be developed: confusion matrix, training/validation learning curves, and Accuracy vs. Model Size. The performance goal is to achieve an accuracy of ≥75% on a clean test set, and provide a brief error analysis for easily confused categories.
+## 4. Key Results
 
-## Timeline
+### 4.1 Clean Speech
 
-W6-W7: Completed data cleaning and speaker stratification, PCEN-Mel feature caching, and the first round of training/validation closed loop, producing the initial confusion matrix and curves.
+- **SVM (MFCC)**  
+  - High training accuracy, but only **57.33%** on the test set due to overfitting.
 
-W8-W9: Focusing on the main results, we prioritized training DS-CNN to form a scale curve and plotted the Accuracy-vs-Model-Size graph for the first time.
+- **CNN (Log-Mel)**  
+  - Final test accuracy **74.00%**, with stable training and validation curves.
 
-W10-W11: Conduct noise assessments and refine models.
+👉 **Conclusion:** On clean FSDD, CNN (Log-Mel) significantly outperforms SVM (MFCC).
 
-W12-W13: Generate graphics styles and documentation, and improve the README and demo. Verify the process of reproducing the problem from scratch and submit a final report with a link.
+### 4.2 Noise Robustness (SNR = 0–20 dB)
 
-## Reference
+- **SVM (MFCC)**  
+  - Accuracy stays around **10%** for all SNR levels (almost random guess).
 
-Wang, X., Sun, S., & Xie, L. (2019, December). Virtual adversarial training for DS-CNN based small-footprint keyword spotting. In 2019 IEEE Automatic Speech Recognition and Understanding Workshop (ASRU) (pp. 607-612). IEEE.
+- **CNN (Log-Mel)**  
+  - 0 dB: 16.67%  
+  - 5 dB: ~20%  
+  - 10 dB: ~31%  
+  - 15 dB: ~46%  
+  - 20 dB: ~61%
 
+👉 **Conclusion:** CNN maintains clearly higher accuracy and shows a **monotonic improvement** as SNR increases, indicating much stronger **noise robustness**.
 
-Rusci, M., Van Hamme, H., & Tuytelaars, T. (2025, April). Self-Incremental Training for Personalized Voice Command Recognition in a Wireless Audio Sensor Network. In ICASSP 2025-2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) (pp. 1-5). IEEE.
+### 4.3 Inference Latency
 
+- Average inference time of CNN: **0.0282 ms per sample** (20 runs averaged).  
+- This meets real-time requirements for small speech recognition systems.
 
-Li, S., Yao, Y., Hu, J., Liu, G., Yao, X., & Hu, J. (2018). An ensemble stacked convolutional neural network model for environmental event sound recognition. Applied Sciences, 8(7), 1152.
+---
 
+## 5. Discussion and Conclusion (Short Version)
 
+- **MFCC + SVM** suffers from:
+  - Loss of detailed time–frequency structure due to strong compression.  
+  - Inability to model temporal dynamics of speech.  
+  - Extremely poor robustness to noise and unseen speakers.
 
+- **Log-Mel + CNN** benefits from:
+  - Full 2D time–frequency structure as input.  
+  - Convolution kernels capturing local patterns (formants, energy peaks, transitions).  
+  - Better generalization across speakers and SNR levels.  
+  - Very low inference latency suitable for embedded deployment.
 
+Overall, the experiments show that **Log-Mel + CNN** is a more effective and practical solution for small-sample digit speech recognition under noisy conditions, while **MFCC + SVM** is more suitable as a baseline method.
 
