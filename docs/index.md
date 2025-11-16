@@ -1,7 +1,4 @@
 
----
-title: ELEC5305 Project - Zixian Jia
----
 
 # ELEC5305 Project – Noise-Robust Digit Speech Recognition
 
