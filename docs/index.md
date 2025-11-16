@@ -99,7 +99,9 @@ We focus on **recognition accuracy**, **noise robustness** under different SNR l
 
 ## Example Inputs
 https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/logmel_0_jackson_20.png
+
 https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/mfcc_0_jackson_20.png
+
 https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/waveform_0_jackson_20.png
 
 ## Example Outputs
