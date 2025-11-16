@@ -29,7 +29,7 @@ We focus on **recognition accuracy**, **noise robustness** under different SNR l
 [(https://github.com/zjia3624/ELEC5305-Project-530315863/tree/main/Figures)](https://github.com/zjia3624/ELEC5305-Project-530315863/tree/main/Figures)
 
 - 🎥 **Demo Video**  
-  [Watch the project demo](在这里放你的 YouTube / Drive / OneDrive 链接)
+[(https://drive.google.com/file/d/1XxvBlEEUfY3qaViR2iJgtZeoF68fajhj/view?usp=sharing)](https://drive.google.com/file/d/1XxvBlEEUfY3qaViR2iJgtZeoF68fajhj/view?usp=sharing)
 
 ---
 
