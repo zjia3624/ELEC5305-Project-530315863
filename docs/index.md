@@ -25,8 +25,8 @@ We focus on **recognition accuracy**, **noise robustness** under different SNR l
 - 🔗 **GitHub Repository (Code & Figures)**  
 [(https://github.com/zjia3624/ELEC5305-Project-530315863/tree/main/Code)](https://github.com/zjia3624/ELEC5305-Project-530315863/tree/main/Code)
 
-- 📄 **Project Report (PDF)**  
-  [Download the full report](../ELEC5305_Project_Zixian_Jia.pdf)
+-  **Project Figure**  
+https://github.com/zjia3624/ELEC5305-Project-530315863/tree/main/Figures
 
 - 🎥 **Demo Video**  
   [Watch the project demo](在这里放你的 YouTube / Drive / OneDrive 链接)
