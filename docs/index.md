@@ -22,7 +22,7 @@ We focus on **recognition accuracy**, **noise robustness** under different SNR l
 
 ## 2. Files and Code
 
-- 🔗 **GitHub Repository (Code & Figures)**  
+- 🔗 **GitHub Repository (Code)**  
 [(https://github.com/zjia3624/ELEC5305-Project-530315863/tree/main/Code)](https://github.com/zjia3624/ELEC5305-Project-530315863/tree/main/Code)
 
 -  **Project Figure**  
