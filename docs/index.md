@@ -23,7 +23,7 @@ We focus on **recognition accuracy**, **noise robustness** under different SNR l
 ## 2. Files and Code
 
 - 🔗 **GitHub Repository (Code & Figures)**  
-  <https://github.com/你的用户名/ELEC5305-Project-530315863>
+[(https://github.com/zjia3624/ELEC5305-Project-530315863/tree/main/Code)](https://github.com/zjia3624/ELEC5305-Project-530315863/tree/main/Code)
 
 - 📄 **Project Report (PDF)**  
   [Download the full report](../ELEC5305_Project_Zixian_Jia.pdf)
@@ -99,7 +99,7 @@ We focus on **recognition accuracy**, **noise robustness** under different SNR l
 
 ---
 
-## 5. Discussion and Conclusion (Short Version)
+## 5. Discussion and Conclusion 
 
 - **MFCC + SVM** suffers from:
   - Loss of detailed time–frequency structure due to strong compression.  
