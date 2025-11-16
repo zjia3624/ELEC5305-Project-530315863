@@ -107,7 +107,7 @@ https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/wavefor
 ## Example Outputs
 
 ### 1. Baseline SVM
-![SVM CM](images/Fig4.2 Confusion Matrix of Baseline SVM Classifier.png)
+https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/Fig4.2%20Confusion%20Matrix%20of%20Baseline%20SVM%20Classifier.png
 
 ### 2. CNN Training Curve
 https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/Fig4.3%20CNN%20training%20log.png
