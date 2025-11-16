@@ -97,6 +97,24 @@ We focus on **recognition accuracy**, **noise robustness** under different SNR l
 - Average inference time of CNN: **0.0282 ms per sample** (20 runs averaged).  
 - This meets real-time requirements for small speech recognition systems.
 
+## Example Inputs
+![Dataset](images/Fig3.1 dataset source from github.png)
+
+## Example Outputs
+
+### 1. Baseline SVM
+![SVM CM](images/Fig4.2 Confusion Matrix of Baseline SVM Classifier.png)
+
+### 2. CNN Training Curve
+https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/Fig4.3%20CNN%20training%20log.png
+
+### 3. CNN Classifier Performance
+https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/Fig4.4%20Confusion%20Matrix%20of%20CNN%20Classifier.png
+
+### 4. Noise Robustness
+https://github.com/zjia3624/ELEC5305-Project-530315863/blob/main/Figures/Fig4.6%20Noise%20robustness%20curves%20SVM%20vs%20CNN.png
+
+
 ---
 
 ## 5. Discussion and Conclusion 
